@@ -8,7 +8,7 @@ An AI-powered end-to-end web application that automates the detection of road su
 - **Automated Bureaucracy:** Instantly generates downloadable, official PDF inspection reports using FPDF.
 
 ## 🛠️ Tech Stack
-- **Frontend/Backend:** Gradio (Python)
+- **Frontend/Backend:** Streamlit (Python)
 - **AI Core:** Ultralytics YOLO11 & PyTorch
 - **Database:** SQLite3
 - **Report Generation:** FPDF
