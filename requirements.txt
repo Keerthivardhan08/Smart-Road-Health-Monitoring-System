@@ -1,5 +1,9 @@
-gradio
-ultralytics
-fpdf
+streamlit
+streamlit-folium
+folium
 pandas
-opencv-python
+plotly
+ultralytics
+opencv-python-headless
+pillow
+fpdf
