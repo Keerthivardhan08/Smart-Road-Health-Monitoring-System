@@ -1,9 +1,10 @@
 streamlit
-streamlit-folium
-folium
 pandas
-plotly
+folium
+streamlit-folium
 ultralytics
 opencv-python-headless
-pillow
+Pillow
 fpdf
+streamlit-js-eval
+geopy
