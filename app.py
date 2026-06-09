@@ -30,9 +30,10 @@ st.set_page_config(
 
 os.makedirs("reports", exist_ok=True)
 
-SENDER_EMAIL = "your_email@gmail.com"
-APP_PASSWORD = "your_app_password"
-AUTHORITY_EMAIL = "authority@gmail.com"
+# Pulling from Streamlit Secrets securely
+SENDER_EMAIL = st.secrets["EMAIL"]
+APP_PASSWORD = st.secrets["PASS"]
+AUTHORITY_EMAIL = "hypothalamus2108@gmail.com"
 
 # ==================================================
 # LOAD MODEL
