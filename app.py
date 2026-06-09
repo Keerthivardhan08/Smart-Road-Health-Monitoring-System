@@ -775,25 +775,46 @@ if app_mode == "Citizen Portal":
                 channels="BGR"
             )
 
+            st.success(
+                  f"Ticket Generated: {ticket_id}"
+            )
+
+            st.image(
+                results[0].plot(),
+                channels="BGR"
+            )
+
+            st.markdown(f"""
+            ## 📋 Road Inspection Report
+
+            **Ticket ID:** {ticket_id}
+
+            **Location:** {lat_in:.5f}, {lon_in:.5f} ({zone_in})
+
+            ### 🔍 Defect Summary
+            - Potholes Detected: {counts['potholes']}
+            - Transverse Cracks: {counts['transverse']}
+            - Longitudinal Cracks: {counts['longitudinal']}
+            - Aligator Cracks: {counts['alligator']}
+
+            ### 📊 Pavement Assessment
+            - PCI Score: **{pci}**
+            - Road Condition: **{condition}**
+            - Priority Level: **{priority}**
+
+            ### 🛠 Recommended Repair
+            **{repair}**
+
+            ### ℹ Reason
+            {repair_reason}
+
+            ### 📌 Current Status
+            Pending Review
+            """)
+
             st.metric(
                 "PCI Score",
                 pci
-            )
-
-            st.write(
-                f"Condition : {condition}"
-            )
-
-            st.write(
-                f"Priority : {priority}"
-            )
-
-            st.write(
-                f"Repair : {repair}"
-            )
-
-            st.write(
-                f"Reason : {repair_reason}"
             )
 
             with open(
