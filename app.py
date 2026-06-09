@@ -207,7 +207,7 @@ def recommend_maintenance(counts):
 # ADVANCED PCI ENGINE
 # ==================================================
 
-def calculate_engineering_metrics(counts):
+def calculate_engineering_metrics(counts, severity_counts):
 
     pci = 100 - (
         counts['longitudinal'] * 5 +
@@ -220,74 +220,75 @@ def calculate_engineering_metrics(counts):
 
     if pci >= 85:
         condition = "Excellent"
-
     elif pci >= 70:
         condition = "Good"
-
     elif pci >= 55:
         condition = "Fair"
-
     elif pci >= 40:
         condition = "Poor"
-
     elif pci >= 20:
         condition = "Very Poor"
-
     else:
         condition = "Failed"
 
-    dispatch_required = "No"
-
     # =========================
-    # OVERRIDE RULES
+    # OVERRIDE RULES & REASONING
     # =========================
+    
+    priority = "Low"
+    action = "Routine Monitoring"
+    repair_rank = 6
+    repair_reason = "Road Condition Acceptable"
 
     if counts["alligator"] >= 1:
-
         priority = "Critical"
+        action = "Immediate Structural Rehabilitation Required"
+        repair_rank = 1
+        repair_reason = "Critical Structural Failure"
 
-        action = (
-            "Immediate Structural Rehabilitation Required"
-        )
-
-        dispatch_required = "Yes"
-
-    elif counts["potholes"] >= 1:
-
+    elif counts["potholes"] >= 3 or severity_counts.get("pothole_high", 0) > 0:
         priority = "High"
+        action = "Full Depth Patching"
+        repair_rank = 2
+        repair_reason = "Multiple or Severe Potholes Detected"
+        
+    elif counts["potholes"] >= 1:
+        priority = "High"
+        action = "Immediate Pothole Repair Required"
+        repair_rank = 3
+        repair_reason = "Localized Pothole Damage"
 
-        action = (
-            "Immediate Pothole Repair Required"
-        )
+    elif counts["transverse"] > 2 or severity_counts.get("transverse_high", 0) > 0:
+        priority = "Medium"
+        action = "Crack Sealing"
+        repair_rank = 4
+        repair_reason = "Thermal Cracking Progression"
 
-        dispatch_required = "Yes"
+    elif counts["longitudinal"] > 2:
+        priority = "Medium"
+        action = "Joint Sealing"
+        repair_rank = 5
+        repair_reason = "Linear Cracking Detected"
 
     else:
-
         if pci < 40:
-
             priority = "High"
-
             action = "Major Rehabilitation Required"
-
+            repair_rank = 2
+            repair_reason = "PCI Below Critical Threshold"
         elif pci < 60:
-
             priority = "Medium"
-
             action = "Preventive Maintenance Required"
-
-        else:
-
-            priority = "Low"
-
-            action = "Routine Monitoring"
+            repair_rank = 4
+            repair_reason = "Accelerated Pavement Deterioration"
 
     return (
         pci,
         condition,
         priority,
         action,
-        dispatch_required
+        repair_rank,
+        repair_reason
     )
 # ==================================================
 # EMAIL SYSTEM
