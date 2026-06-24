@@ -12,3 +12,4 @@ streamlit-folium
 streamlit-js-eval
 geopy
 openpyxl
+fpdf
